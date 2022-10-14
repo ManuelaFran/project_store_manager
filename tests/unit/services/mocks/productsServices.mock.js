@@ -18,7 +18,12 @@ const returnsASingleProductSuccessfully = {
   name: "Martelo de Thor"
 };
 
+const newProduct = {
+  name: "Espada Excalibur"
+};
+
 module.exports = {
   returnsProductsSuccessfully,
   returnsASingleProductSuccessfully,
+  newProduct,
 };
