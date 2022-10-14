@@ -12,7 +12,15 @@ const productId = {
   name: "Martelo de Thor"
 };
 
+const newProduct = {
+  name: "Espada Excalibur"
+};
+
+const newProductId = { id: 4, ...newProduct };
+
 module.exports = {
   productList,
   productId,
+  newProduct,
+  newProductId,
 };
