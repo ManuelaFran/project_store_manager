@@ -1,32 +1,43 @@
-const snakeize = require('snakeize');
-const camelize = require('camelize');
 const connection = require('./connection');
 
-const insert = async (table, insertValues) => {
-  const columns = Object.keys(snakeize(insertValues))
-    .map((key) => `${key}`)
-    .join(', ');
-
-  const placeholders = Object.keys(insertValues)
-    .map((_key) => '?')
-    .join(', ');
-
-  const [{ insertId }] = await connection.execute(
-    `INSERT INTO ${table} (${columns}) VALUE (${placeholders})`,
-    [...Object.values(insertValues)],
-  );
-  return insertId;
+const createSaleDate = async () => {
+  const queryCreateSaleDate = 'INSERT INTO sales () VALUES ()';
+  const [saleDate] = await connection.execute(queryCreateSaleDate);
+  return {
+    id: saleDate.insertId,
+  };
 };
 
-const findBySaleId = async (saleId) => {
-  const [sales] = await connection.execute(
-    'SELECT product_id, quantity FROM sales_products WHERE sale_id = ?',
-    [saleId],
-  );
-  return camelize(sales);
+const createSale = async ({ id, productId, quantity }) => {
+  try {
+    const query = 'INSERT INTO sales_products (sale_id,product_id, quantity) VALUES (?, ?, ?)';
+    await connection.execute(query, [id, productId, quantity]);
+    return {
+      id,
+    };
+  } catch (error) {
+    return error;
+  }
+};
+
+const getAll = async () => {
+  const query = `SELECT sp.sale_id AS saleId, s.date, sp.product_id, sp.quantity 
+    FROM sales_products AS sp
+    JOIN sales AS s ON sp.sale_id = s.id`;
+  const [allSales] = await connection.execute(query);
+  return allSales;
+};
+
+const getById = async (id) => {
+  const query = `SELECT sls.date, sl.product_id, sl.quantity FROM sales_products AS sl
+  JOIN sales AS sls ON sl.sale_id = sls.id WHERE sl.sale_id = ?`;
+  const [sales] = await connection.execute(query, [id]);
+  return sales;
 };
 
 module.exports = {
-  insert,
-  findBySaleId,
+  createSaleDate,
+  createSale,
+  getAll,
+  getById,
 };
