@@ -1,7 +1,7 @@
 const schemas = require('../schemas/schemas');
-const productService = require('../services/products.service');
+const productsService = require('../services/products.service');
 
-const validateName = (req, res, next) => {
+const nameValidation = (req, res, next) => {
   const { name } = req.body;
   const validationName = schemas.validateName(name);
 
@@ -13,9 +13,9 @@ const validateName = (req, res, next) => {
   next();
 };
 
-const validateIfNameAlreadyExist = async (req, res, next) => {
+const existingNameValidation = async (req, res, next) => {
   const { name } = req.body;
-  const productExist = await productService.getByName({ name });
+  const productExist = await productsService.findByName({ name });
 
   if (productExist.length > 0) { 
     return res.status(409).json({ message: schemas.errors.nameAlreadyExist }); 
@@ -24,7 +24,7 @@ const validateIfNameAlreadyExist = async (req, res, next) => {
   next();
 };
 
-const validateQuantity = (req, res, next) => {
+const quantityValidation = (req, res, next) => {
   const { quantity } = req.body;
   const validationQuantity = schemas.validateQuantity(quantity);
 
@@ -36,9 +36,9 @@ const validateQuantity = (req, res, next) => {
   next();
 };
 
-const validateIfExist = async (req, res, next) => {
+const validatingIfItExists = async (req, res, next) => {
   const { id } = req.params;
-  const product = await productService.getById(id);
+  const product = await productsService.findById({ id });
   
   if (!product) return res.status(404).json({ message: 'Product not found' });
   next();
@@ -67,10 +67,10 @@ const validateSalesQuantity = (req, res, next) => {
 };
 
 module.exports = { 
-  validateName,
-  validateIfNameAlreadyExist,
-  validateQuantity,
-  validateIfExist,
+  nameValidation,
+  existingNameValidation,
+  quantityValidation,
+  validatingIfItExists,
   validateProductId,
   validateSalesQuantity,
 };

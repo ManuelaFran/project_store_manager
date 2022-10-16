@@ -1,10 +1,14 @@
-const express = require('express');
-const salesController = require('../controllers/sales.controller');
-const validation = require('../middlewares/validation');
+// const express = require('express');
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post('/', validation.validateProductId, validation.validateSalesQuantity,
-  salesController.createSale);
+// const salesController = require('../controllers/sales.controller');
+// const validation = require('../middlewares/validation');
 
-module.exports = router;
+// router
+//   .post('/', validation.validateProductId, validation.validateSalesQuantity,
+//     salesController.insertSale)
+//   .get('/', salesController.findAll)
+//   .get('/:id', salesController.findById);
+
+// module.exports = router;

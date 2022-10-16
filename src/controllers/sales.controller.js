@@ -1,29 +1,29 @@
-const saleService = require('../services/sales.service');
+// const salesService = require('../services/sales.service');
 
-const createSale = async (req, res) => {
-  const arraySales = req.body;
-  const newSale = await saleService.createSale(arraySales);
+// const insertSale = async (req, res) => {
+//   const arraySales = req.body;
+//   const newSale = await salesService.insertSale(arraySales);
 
-  return res.status(201).json({ id: newSale.id, itemsSold: arraySales });
-};
+//   return res.status(201).json({ id: newSale.id, itemsSold: arraySales });
+// };
 
-const getAll = async (_req, res) => {
-  const allSales = await saleService.getAll();
+// const findAll = async (_req, res) => {
+//   const allSales = await salesService.findAll();
 
-  return res.status(200).json(allSales);
-};
+//   return res.status(200).json(allSales);
+// };
 
-const getById = async (req, res) => {
-  const { id } = req.params;
-  const sales = await saleService.getById(id);
+// const findById = async (req, res) => {
+//   const { id } = req.params;
+//   const sales = await salesService.findById(id);
 
-  if (!sales || sales.length === 0) return res.status(404).json({ message: 'Sale not found' });
+//   if (!sales || sales.length === 0) return res.status(404).json({ message: 'Sale not found' });
 
-  return res.status(200).json(sales);
-};
+//   return res.status(200).json(sales);
+// };
 
-module.exports = {
-  createSale,
-  getAll,
-  getById,
-};
+// module.exports = {
+//   insertSale,
+//   findAll,
+//   findById,
+// };

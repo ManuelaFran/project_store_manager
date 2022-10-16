@@ -33,20 +33,8 @@ const insert = async (product) => {
   return insertId;
 };
 
-const increment = async (id, quantity) => {
-  const query = 'UPDATE products SET quantity = quantity + ? WHERE id = ?';
-  await connection.execute(query, [quantity, id]);
-};
-
-const decrement = async (id, quantity) => {
-  const query = 'UPDATE products SET quantity = quantity - ? WHERE id = ?';
-  await connection.execute(query, [quantity, id]);
-};
-
 module.exports = {
   findAll,
   findById,
   insert,
-  increment,
-  decrement,
 };
