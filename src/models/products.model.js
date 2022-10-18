@@ -35,7 +35,7 @@ const insert = async (product) => {
 
 const updateById = async (productId, update) => {
   const [{ insertId }] = await connection.execute(
-    'UPDATE StoreManager.products SET name = ? WHERE id = ?',
+    'UPDATE products SET name = ? WHERE id = ?',
     [update, productId],
   );
   return insertId;
@@ -43,7 +43,7 @@ const updateById = async (productId, update) => {
 
 const remove = async (productId) => {
   const [{ affectedRows }] = await connection.execute(
-    'DELETE FROM StoreManager.products WHERE id = ? ',
+    'DELETE FROM products WHERE id = ? ',
     [productId],
   );
 
